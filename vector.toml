@@ -1,0 +1,20 @@
+[sources.my_source_id]
+type = "demo_logs"
+format = "shuffle"
+lines = [
+  "Line 1",
+  "Line 2"
+]
+
+[sinks.my_sink_id]
+type = "nats"
+inputs = [ "my_source_id" ]
+url = "nats://nats:4222"
+subject = "test_subject"
+encoding.codec = "json"
+
+  [sinks.my_sink_id.auth]
+  strategy = "credentials_file"
+  # strategy = "nkey"
+  # auth.nkey.nkey = "UBOTCPXO54Q75GFJZT6VIK3ZCN4GIVDIKDU246INK7N2PZNSD4776BDG"
+  # auth.nkey.seed = "SUAG2GX5GFXSULO3VITT3NBPPB7XRNU25S6NF2UT3EHSSYPJMAS6NLQIBI"

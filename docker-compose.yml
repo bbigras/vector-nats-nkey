@@ -1,0 +1,20 @@
+---
+version: '3.6'
+services:
+  nats:
+    image: nats
+    volumes:
+    - ./nats-server.conf:/nats-server.conf
+    ports:
+    - 4222:4222
+    command: >-
+      -c /nats-server.conf
+      -p 4222
+      --name s1
+  vector:
+    image: "timberio/vector:latest-alpine"
+    volumes:
+      - ./vector.toml:/etc/vector/vector.toml:ro
+      - ./nats.creds:/etc/nats/nats.creds:ro
+    depends_on:
+      - "nats"
